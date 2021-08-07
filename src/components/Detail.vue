@@ -1,43 +1,48 @@
 <template>
   <div>
     <div class="container mt-3">
-      <h2>App Name</h2>
-      <p>Wed 14 2020</p>
+      <h2>{{ templatedata.name }}</h2>
+      <p>{{ templatedata.createdAt }}</p>
 
-      <b-img
-        src="https://picsum.photos/1024/400/?image=41"
-        fluid
-        alt="Responsive image"
-      ></b-img>
+      <b-img :src="templatedata.image" fluid alt="Responsive image"></b-img>
+      <hr />
       <p class="descriptino m-2">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate, ea
-        modi sed ex harum soluta rem sint cumque inventore ad ipsum eius alias
-        corporis omnis eveniet tempore atque eaque!
+        {{ templatedata.details }}
       </p>
-      <b-button variant="outline-primary" class="btn"
-        >Get Code
-        <i class="fas fa-file-code m-2"></i>
-      </b-button>
+      <a :href="templatedata.link" target="_blank" rel="noopener noreferrer">
+        <b-button variant="outline-primary" class="btn">
+          Get Code
+          <i class="fas fa-file-code m-2"></i>
+        </b-button>
+      </a>
       <!-- <h2>{{ id }}</h2> -->
     </div>
   </div>
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "Detail",
   data() {
     return {
       id: "",
+      templatedata: "",
     };
   },
   created() {
     this.id = this.$route.params.id;
-    // Get the id
-    // Call the api
-    // On response
-    // Save to the data
-    // Display to template
+  },
+  mounted() {
+    axios
+      .get(`http://127.0.0.1:5000/template/${this.id}`)
+      .then((response) => {
+        console.log(response);
+        this.templatedata = response.data;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
 };
 </script>
@@ -46,11 +51,21 @@ export default {
 .btn {
   width: 10rem;
 }
+a {
+  text-decoration: none;
+}
+a:hover {
+  color: rgb(255, 255, 255);
+}
 p {
+  font-size: 1.5rem;
   font-family: sans-serif;
   max-width: 80%;
 }
 h2 {
   font-family: sans-serif;
+}
+.container {
+  margin-bottom: 1rem;
 }
 </style>

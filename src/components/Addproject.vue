@@ -60,11 +60,12 @@
               class="imagePreviewWrapper"
               v-on:click="selectImage"
               :src="selectedImage"
-              @click="uploadeImage"
             />
             <i class="far fa-images" v-if="!file" v-on:click="selectImage"></i>
           </div>
-          <button class="btn" type="submit">Add Template</button>
+          <button class="btn" :disabled="!isButtonDisabled" type="submit">
+            Add Template
+          </button>
         </b-card>
       </form>
     </div>
@@ -73,8 +74,8 @@
 
 <script>
 import navbar2 from "../components/navbar2.vue";
-var CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/dbyimfowi/image/upload";
-var CLOUDINARY_UPLOAD_PRESET = "t207ulgb";
+// var CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/dbyimfowi/image/upload";
+// var CLOUDINARY_UPLOAD_PRESET = "t207ulgb";
 import api from "../api/axios.js";
 import axios from "axios";
 
@@ -92,7 +93,7 @@ export default {
       file: null,
       filelength: "",
       errors: [],
-      fileUploadingProgress: null,
+      isButtonDisabled: false,
     };
   },
   components: {
@@ -104,20 +105,21 @@ export default {
       this.$refs.fileInput.click();
     },
     onFileChange(e) {
+      // this.isButtonDisabled = true;
       this.file = e.target.files[0];
       // this help to preview image
       this.selectedImage = URL.createObjectURL(e.target.files[0]);
       this.filelength = e.target.files.length;
-      // console.log(this.file.name);
-    },
+      console.log(process.env);
 
-    // form uploade function
-    upload: function() {
       const formData = new FormData();
       formData.append("file", this.file);
-      formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+      formData.append(
+        "upload_preset",
+        process.env.VUE_APP_CLOUDINARY_UPLOAD_PRESET
+      );
       axios({
-        url: CLOUDINARY_URL,
+        url: process.env.VUE_APP_CLOUDINARY_URL,
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
@@ -128,25 +130,28 @@ export default {
             (uploadeEvent.loaded / uploadeEvent.total) * 100
           );
           console.log(progressbar);
-          this.fileUploadingProgress = progressbar;
-          console.log(`hello ${this.fileUploadingProgress}`);
         },
       })
         .then((res) => {
           console.log(res);
-          // console.log(res.data.url);
           this.form.imageUrl = res.data.url;
           console.log(this.form.imageUrl);
+          this.isButtonDisabled = true;
         })
         .catch((err) => {
           console.log(err);
+          this.isButtonDisabled = false;
         });
+    },
 
+    // form uploade function
+    upload: function() {
       // send form to backend
       api
         .post("http://127.0.0.1:5000/addtemplate", this.form)
         .then((res) => {
           console.log(res);
+          this.$router.push("/templates");
         })
         .catch((err) => {
           console.log(err);
