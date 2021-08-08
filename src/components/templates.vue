@@ -25,7 +25,6 @@ export default {
     axios
       .get("https://templatezone.herokuapp.com/template")
       .then((response) => {
-        console.log(response.data);
         this.alltemplates = response.data;
       })
       .catch((error) => {

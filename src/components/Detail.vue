@@ -36,7 +36,6 @@ export default {
     axios
       .get(`https://templatezone.herokuapp.com/template/${this.id}`)
       .then((response) => {
-        console.log(response);
         this.templatedata = response.data;
       })
       .catch((err) => {

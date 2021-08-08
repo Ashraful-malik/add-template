@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <b-alert show dismissible v-if="error.message"> {{ error }} </b-alert>
     <div class="form">
       <b-form @submit="onSubmit">
         <h2 class="mt-4">Login</h2>
@@ -61,7 +62,6 @@ export default {
           this.$router.push("/");
         })
         .catch((err) => {
-          console.log(err);
           this.error = err;
         });
     },

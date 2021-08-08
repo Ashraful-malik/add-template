@@ -35,6 +35,7 @@
 <script>
 import axios from "axios";
 import { mapGetters } from "vuex";
+import cookies from "js-cookie";
 export default {
   name: "card",
   props: ["alltemplates"],
@@ -46,16 +47,31 @@ export default {
   },
   methods: {
     deleteitem: (event) => {
-      const id = event.target.id;
-      axios
-        .delete(`https://templatezone.herokuapp.com/deletetemplate/${id}`)
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      try {
+        const id = event.target.id;
+        const response = axios.delete(
+          `https://templatezone.herokuapp.com/deletetemplate/${id}`
+        );
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+      }
     },
+  },
+  mounted() {
+    axios({
+      methos: "get",
+      url: "https://templatezone.herokuapp.com/user",
+      headers: {
+        Authorization: cookies.get("token"),
+      },
+    })
+      .then((res) => {
+        this.$store.dispatch("user", res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   },
 };
 </script>

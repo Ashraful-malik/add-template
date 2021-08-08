@@ -1,6 +1,9 @@
 <template>
-  <div >
+  <div>
     <navbar2 />
+    <b-alert show dismissible v-if="errors.message">
+      {{ errors }}
+    </b-alert>
     <div class="container mt-5">
       <form v-on:submit.prevent="upload">
         <b-card class="card">
@@ -46,7 +49,6 @@
           </b-form-group>
           <div class="inputfile">
             <h5>select Files</h5>
-            <!-- <input ref="fileInput" type="file" /> -->
             <input
               ref="fileInput"
               type="file"
@@ -92,6 +94,7 @@ export default {
       filelength: "",
       errors: [],
       isButtonDisabled: false,
+      responseData: "",
     };
   },
   components: {
@@ -104,12 +107,9 @@ export default {
     },
     onFileChange(e) {
       this.file = e.target.files[0];
-
       // preview image
       this.selectedImage = URL.createObjectURL(e.target.files[0]);
       this.filelength = e.target.files.length;
-      console.log(process.env);
-
       const formData = new FormData();
       formData.append("file", this.file);
       formData.append(
@@ -131,9 +131,8 @@ export default {
         },
       })
         .then((res) => {
-          console.log(res);
-          this.form.imageUrl = res.data.url;
-          console.log(this.form.imageUrl);
+          this.form.imageUrl = res.data.secure_url;
+          // console.log(this.form.imageUrl);
           this.isButtonDisabled = true;
         })
         .catch((err) => {
@@ -147,11 +146,11 @@ export default {
       api
         .post("https://templatezone.herokuapp.com/addtemplate", this.form)
         .then((res) => {
-          console.log(res);
+          this.responseData = res;
           this.$router.push("/templates");
         })
         .catch((err) => {
-          console.log(err);
+          this.errors = err;
         });
     },
   },
@@ -177,7 +176,6 @@ export default {
   left: 9%;
   font-size: 5rem;
   cursor: pointer;
-  /* z-index: -1; */
 }
 .select_file {
   display: none;
