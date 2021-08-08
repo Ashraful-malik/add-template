@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div >
     <navbar2 />
     <div class="container mt-5">
       <form v-on:submit.prevent="upload">

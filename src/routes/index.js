@@ -7,13 +7,16 @@ import Login from "../components/Login.vue";
 import Addproject from "../components/Addproject.vue";
 import notfound from "../components/Notfound.vue";
 Vue.use(VueRouter);
-
 const routes = [
   { name: "home", path: "/", component: home },
   { name: "templates", path: "/templates", component: templates },
   { name: "template", path: "/template/:id", component: Detail },
   { name: "login", path: "/admin", component: Login },
-  { name: "add", path: "/add", component: Addproject },
+  {
+    name: "add",
+    path: "/add",
+    component: Addproject,
+  },
   { name: "Not Found", path: "*", component: notfound },
 ];
 const router = new VueRouter({
