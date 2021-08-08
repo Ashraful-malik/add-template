@@ -6,23 +6,47 @@
       <b-collapse id="nav-collapse" is-nav class="float-right">
         <b-navbar-nav>
           <b-nav-item>
-            <router-link to="/templates" class="links">Home </router-link>
+            <router-link to="/" class="links">Home </router-link>
           </b-nav-item>
           <b-nav-item>
             <router-link to="/templates" class="links">Templates </router-link>
           </b-nav-item>
           <b-nav-item>
-            <router-link to="/add" class="links">Add Template </router-link>
+            <router-link to="/add" class="links" v-if="user.role === 'admin'"
+              >Add Template
+            </router-link>
+          </b-nav-item>
+          <b-nav-item>
+            <b-button
+              variant="outline-dark text-white"
+              @click.prevent="handleclick"
+              v-if="user"
+              >Logout
+            </b-button>
           </b-nav-item>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
   </div>
 </template>
-
 <script>
+import { mapGetters } from "vuex";
+import cookies from "js-cookie";
 export default {
   name: "navbar",
+  data() {
+    return {};
+  },
+  computed: {
+    ...mapGetters(["user"]),
+  },
+
+  methods: {
+    handleclick() {
+      cookies.remove("token");
+      this.$store.dispatch("user", "");
+    },
+  },
 };
 </script>
 

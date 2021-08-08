@@ -54,9 +54,11 @@ export default {
       axios
         .post("http://127.0.0.1:5000/login", this.form)
         .then((res) => {
-          console.log(res);
+          // console.log(res.data.token);
+          // console.log(res.data.user);
           cookies.set("token", res.data.token);
-          this.$router.push("/templates");
+          this.$store.dispatch("user", res.data.user);
+          this.$router.push("/");
         })
         .catch((err) => {
           console.log(err);

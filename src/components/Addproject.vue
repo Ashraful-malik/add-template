@@ -105,9 +105,9 @@ export default {
       this.$refs.fileInput.click();
     },
     onFileChange(e) {
-      // this.isButtonDisabled = true;
       this.file = e.target.files[0];
-      // this help to preview image
+
+      // preview image
       this.selectedImage = URL.createObjectURL(e.target.files[0]);
       this.filelength = e.target.files.length;
       console.log(process.env);
@@ -146,7 +146,6 @@ export default {
 
     // form uploade function
     upload: function() {
-      // send form to backend
       api
         .post("http://127.0.0.1:5000/addtemplate", this.form)
         .then((res) => {

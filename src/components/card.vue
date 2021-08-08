@@ -21,6 +21,7 @@
             <i class="fas fa-eye"></i>
           </router-link>
           <i
+            v-if="user"
             class="far fa-trash-alt delete"
             @click="deleteitem"
             :id="template._id"
@@ -33,11 +34,15 @@
 
 <script>
 import axios from "axios";
+import { mapGetters } from "vuex";
 export default {
   name: "card",
   props: ["alltemplates"],
   data() {
     return {};
+  },
+  computed: {
+    ...mapGetters(["user"]),
   },
   methods: {
     deleteitem: (event) => {
@@ -70,15 +75,11 @@ export default {
 }
 .card {
   margin: 1rem 1rem;
-
-  /* box-shadow: 0px 5px 15px rgba(95, 95, 95, 0.25); */
 }
 .align_cards {
   display: grid;
   grid-template-columns: auto auto auto;
   grid-gap: 1rem;
-  /* align-items: center; */
-  /* justify-content: space-around; */
 }
 
 @media screen and (max-width: 800px) {

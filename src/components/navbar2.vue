@@ -29,7 +29,6 @@ ul {
   margin-left: 1rem;
 }
 .links {
-  /* margin: 1rem; */
   text-decoration: none;
   color: black;
 }
@@ -37,8 +36,5 @@ ul {
 .brandlogo {
   margin-left: 1rem;
   text-decoration: none;
-
-  /* background: bisque; */
-  /* color: black !important; */
 }
 </style>

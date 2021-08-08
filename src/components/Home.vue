@@ -2,17 +2,15 @@
   <div>
     <div class="hero">
       <navbar />
+
       <b-container class="bv-example-row">
         <b-row class="row">
           <b-col>
             <div class="content">
               <h1>
-                Get free Templates Codes for your Projest
+                Get free Templates Code for your Projest
               </h1>
-              <p>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsam
-                provident .saepe iusto maxime. Provident, eveniet nostrum?
-              </p>
+              <p></p>
               <router-link to="/templates" class="btn">
                 <h5 class="m-1">Get Start</h5>
               </router-link>
@@ -22,16 +20,44 @@
           <b-col><img src="../assets/man.svg" alt="" class="image"/></b-col>
         </b-row>
       </b-container>
+      <div class="social_icons">
+        <a href="https://www.instagram.com/ashraful_malik_/" target="_black">
+          <i class="fab fa-instagram"> </i>
+        </a>
+        <a href="https://github.com/Ashraful-malik" target="_black">
+          <i class="fab fa-github"></i>
+        </a>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import navbar from "../components/navbar.vue";
+import axios from "axios";
+import cookies from "js-cookie";
 export default {
   name: "home",
+  data() {
+    return {};
+  },
   components: {
     navbar,
+  },
+  mounted() {
+    axios({
+      methos: "get",
+      url: "http://localhost:5000/user",
+      headers: {
+        Authorization: cookies.get("token"),
+      },
+    })
+      .then((res) => {
+        this.$store.dispatch("user", res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
 };
 </script>
@@ -39,6 +65,17 @@ export default {
 <style scoped>
 .content {
   margin-top: 5rem;
+}
+.social_icons {
+  position: absolute;
+  bottom: 0;
+  margin: 1rem;
+}
+
+.fab {
+  color: #fff;
+  font-size: 2rem;
+  margin: 1rem;
 }
 .hero {
   width: 100%;
@@ -63,7 +100,6 @@ h1 {
 p {
   margin-top: 10px;
   font-family: sans-serif;
-  /* width: 30rem; */
   color: rgb(211, 211, 211);
 }
 .btn {

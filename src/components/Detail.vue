@@ -15,7 +15,6 @@
           <i class="fas fa-file-code m-2"></i>
         </b-button>
       </a>
-      <!-- <h2>{{ id }}</h2> -->
     </div>
   </div>
 </template>

@@ -2,27 +2,27 @@ import Vue from "vue";
 import Vuex from "vuex";
 
 Vue.use(Vuex);
-
 const state = {
-  imageLink: "",
+  user: "",
 };
-
 const store = new Vuex.Store({
   state,
   getters: {
-    imageLink: (state) => {
+    user: (state) => {
       return state.user;
     },
   },
   actions: {
-    imageLink(context, imageLink) {
-      context.commit("imageLink", imageLink);
+    user(context, user) {
+      context.commit("user", user);
     },
   },
+
   mutations: {
-    imageLink(state, imageLink) {
-      state.imageLink = imageLink;
+    user(state, user) {
+      state.user = user;
     },
   },
 });
+
 export default store;
