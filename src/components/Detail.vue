@@ -34,7 +34,7 @@ export default {
   },
   mounted() {
     axios
-      .get(`http://127.0.0.1:5000/template/${this.id}`)
+      .get(`https://templatezone.herokuapp.com/template/${this.id}`)
       .then((response) => {
         console.log(response);
         this.templatedata = response.data;

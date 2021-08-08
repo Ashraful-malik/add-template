@@ -23,7 +23,7 @@ export default {
   },
   mounted() {
     axios
-      .get("http://127.0.0.1:5000/template")
+      .get("https://templatezone.herokuapp.com/template")
       .then((response) => {
         console.log(response.data);
         this.alltemplates = response.data;

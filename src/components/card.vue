@@ -48,7 +48,7 @@ export default {
     deleteitem: (event) => {
       const id = event.target.id;
       axios
-        .delete(`http://127.0.0.1:5000/deletetemplate/${id}`)
+        .delete(`https://templatezone.herokuapp.com/deletetemplate/${id}`)
         .then((response) => {
           console.log(response);
         })

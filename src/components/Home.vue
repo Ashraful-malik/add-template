@@ -47,7 +47,7 @@ export default {
   mounted() {
     axios({
       methos: "get",
-      url: "http://localhost:5000/user",
+      url: "https://templatezone.herokuapp.com/user",
       headers: {
         Authorization: cookies.get("token"),
       },

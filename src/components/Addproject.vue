@@ -74,8 +74,6 @@
 
 <script>
 import navbar2 from "../components/navbar2.vue";
-// var CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/dbyimfowi/image/upload";
-// var CLOUDINARY_UPLOAD_PRESET = "t207ulgb";
 import api from "../api/axios.js";
 import axios from "axios";
 
@@ -147,7 +145,7 @@ export default {
     // form uploade function
     upload: function() {
       api
-        .post("http://127.0.0.1:5000/addtemplate", this.form)
+        .post("https://templatezone.herokuapp.com/addtemplate", this.form)
         .then((res) => {
           console.log(res);
           this.$router.push("/templates");

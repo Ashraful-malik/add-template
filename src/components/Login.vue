@@ -52,7 +52,7 @@ export default {
     onSubmit(event) {
       event.preventDefault();
       axios
-        .post("http://127.0.0.1:5000/login", this.form)
+        .post("https://templatezone.herokuapp.com/login", this.form)
         .then((res) => {
           // console.log(res.data.token);
           // console.log(res.data.user);
