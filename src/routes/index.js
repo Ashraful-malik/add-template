@@ -16,6 +16,9 @@ const routes = [
     name: "add",
     path: "/add",
     component: Addproject,
+    meta: {
+      requireAuth: true,
+    },
   },
   { name: "Not Found", path: "*", component: notfound },
 ];
@@ -23,4 +26,18 @@ const router = new VueRouter({
   mode: "history",
   routes,
 });
+router.beforeEach((to, from, next) => {
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if (localStorage.getItem("access_token") == null) {
+      next({
+        path: "/login",
+      });
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
+});
+
 export default router;
